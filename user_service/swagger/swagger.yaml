@@ -1,0 +1,76 @@
+consumes:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+definitions:
+  User:
+    description: user (default view)
+    example:
+      created_at: 1981-01-08T09:50:47Z
+      id: 1
+      name: test
+    properties:
+      created_at:
+        description: Date of creation
+        example: 1981-01-08T09:50:47Z
+        format: date-time
+        type: string
+      id:
+        description: ID of user
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: Name of user
+        example: test
+        type: string
+    required:
+    - id
+    - name
+    - created_at
+    title: 'Mediatype identifier: application/vnd.user+json; view=default'
+    type: object
+  UserCollection:
+    description: UserCollection is the media type for an array of User (default view)
+    example:
+    - created_at: 1981-01-08T09:50:47Z
+      id: 1
+      name: test
+    - created_at: 1981-01-08T09:50:47Z
+      id: 1
+      name: test
+    items:
+      $ref: '#/definitions/User'
+    title: 'Mediatype identifier: application/vnd.user+json; type=collection; view=default'
+    type: array
+host: localhost:8082
+info:
+  description: sample microservice API with goa
+  title: user api server
+  version: ""
+paths:
+  /users:
+    get:
+      description: Retrieve all users.
+      operationId: user#list
+      produces:
+      - application/vnd.user+json; type=collection
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/UserCollection'
+      schemes:
+      - http
+      summary: list user
+      tags:
+      - user
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+schemes:
+- http
+swagger: "2.0"
